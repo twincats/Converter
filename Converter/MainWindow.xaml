@@ -1,0 +1,163 @@
+﻿<Window x:Class="Converter.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Converter"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="600" Width="1000" MinWidth="800">
+    <Grid Margin="0,0,0,0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="120"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="150"/>
+            <ColumnDefinition Width="150"/>
+            <ColumnDefinition Width="170"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <!--quality Group-->
+        <GroupBox  Grid.Row="0" Grid.Column="0">
+            <GroupBox.Header>
+                <TextBlock>
+                    <Run Text="Quality : " />
+                    <Run x:Name="quality_bold" Text="60" FontWeight="Bold" />
+                </TextBlock>
+            </GroupBox.Header>
+            <Grid>
+                <!-- Define 2 rows and 2 columns -->
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <!-- TextBox in Row 0, Column 1 -->
+                <Slider x:Name="quality_slider" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Maximum="100" Minimum="60" Value="60" ValueChanged="update_quality_label" TickPlacement="BottomRight" LargeChange="5" TickFrequency="5" SmallChange="0"  />
+
+            </Grid>
+        </GroupBox>
+
+        <!--Resize Group-->
+        <GroupBox Grid.Row="0" Grid.Column="1">
+            <GroupBox.Header>
+                <TextBlock>
+                    <Run Text="Resize : " />
+                    <Run x:Name="resize_bold" Text="" FontWeight="Bold" />
+                </TextBlock>
+            </GroupBox.Header>
+            <Grid>
+                <!-- Define 2 rows and 2 columns -->
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="30"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Button x:Name="btn_resize_hide" Content="H" Click="btn_resize_hide_click" />
+
+
+                <!-- TextBox in Row 0, Column 1 -->
+                <Slider x:Name="resize_slider" Grid.Row="0" Grid.Column="1" Margin="4 0 0 0" VerticalAlignment="Center" Maximum="1400" Minimum="900" Value="1000" ValueChanged="update_resize_label" TickPlacement="BottomRight" LargeChange="100" TickFrequency="50" SmallChange="10"  />
+
+                <Button x:Name="resize_btn" Grid.Column="0" Grid.ColumnSpan="2" Content="Reize" Click="resize_click"/>
+            </Grid>
+        </GroupBox>
+
+        <!--Delete Group-->
+        <GroupBox Header="Delete :" Grid.Row="0" Grid.Column="2">
+            <Grid VerticalAlignment="Center">
+                <!-- Define 2 rows and 2 columns -->
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                
+                <RadioButton x:Name="radio_del_yes" Content="Yes" HorizontalAlignment="Center" Grid.Column="0" Foreground="Red" IsChecked="True" />
+                <RadioButton x:Name="radio_del_no" Content="No" HorizontalAlignment="Center" Grid.Column="1" />
+            </Grid>
+        </GroupBox>
+
+        <!--Parallel Group-->
+        <GroupBox Grid.Row="0" Grid.Column="3">
+            <GroupBox.Header>
+                <TextBlock>
+                    <Run Text="Parallel Convert : " />
+                    <Run x:Name="parallel_bold" Text="5" FontWeight="Bold" />
+                </TextBlock>
+            </GroupBox.Header>
+            <Grid VerticalAlignment="Center">
+                <!-- Define 2 rows and 2 columns -->
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Slider x:Name="slider_parallel" Grid.Column="0" Minimum="1" TickPlacement="BottomRight" VerticalAlignment="Center" Value="5" ValueChanged="parallel_change" />
+            </Grid>
+        </GroupBox>
+
+        <!--Format Image Group-->
+        <GroupBox Header="Format Image :" Grid.Row="0" Grid.Column="4">
+            <Grid VerticalAlignment="Center"  >
+                <!-- Define 2 rows and 2 columns -->
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <CheckBox x:Name="check_img1"  Grid.Column="0" Content="*.jpg, *.png" IsChecked="True"/>
+                <CheckBox x:Name="check_img2" HorizontalAlignment="Right"  Grid.Column="1" Content="*.webp"/>
+
+            </Grid>
+        </GroupBox>
+
+
+        <!-- row 2 -->
+        <StackPanel Grid.Row="1" Grid.ColumnSpan="5" >
+            <TextBox x:Name="tbox_Title" Text="" Height="25" Margin="1 0 2 2" TextAlignment="Center" VerticalContentAlignment="Center" IsReadOnly="True"/>
+            <TextBox x:Name="tbox_search" Text="" Height="25" Margin="1 0 2 2" TextAlignment="Center" VerticalContentAlignment="Center" TextChanged="tbox_search_change" />
+        </StackPanel>
+
+        <!-- row 3 -->
+		<ListView Name="lv_mangadata" Grid.Row="2" Grid.ColumnSpan="5" Margin="1 0 1 0" SelectionChanged="lv_mangadata_selection" />
+
+        <!-- row 4 -->
+        <StackPanel Grid.Row="3" Grid.ColumnSpan="5" Margin="1 0 1 0">
+            <RichTextBox x:Name="display_status" Height="100" Margin="0 0 0 5" IsReadOnly="True"/>
+            <ProgressBar x:Name="progress_convert" Height="25" Margin="0 0 0 5"/>
+            <Grid Height="80">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="1" Orientation="Horizontal">
+                    <Button Content="Reset" Width="60" Margin="2 15 2 15"/>
+                    <Button Content="Copy Log" Width="60" Margin="2 15 2 15"/>
+                    <Button Content="Save Log" Width="60" Margin="2 15 2 15"/>
+                    <Button x:Name="convert_btn" Content="Convert" Width="60" Margin="2 15 20 15" Background="#FFF38416" Foreground="White" Click="convert_click"/>
+                </StackPanel>
+            </Grid>
+        </StackPanel>
+    </Grid>
+
+</Window>

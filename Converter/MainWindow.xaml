@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Converter"
         mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
         Title="MainWindow" Height="600" Width="1000" MinWidth="800">
     <Grid Margin="0,0,0,0">
         <Grid.ColumnDefinitions>
@@ -64,13 +65,13 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <Button x:Name="btn_resize_hide" Content="H" Click="btn_resize_hide_click" />
+                <Button x:Name="btn_resize_hide" Content="H" Click="btn_resize_hide_click" Height="24" VerticalAlignment="Top" />
 
 
                 <!-- TextBox in Row 0, Column 1 -->
                 <Slider x:Name="resize_slider" Grid.Row="0" Grid.Column="1" Margin="4 0 0 0" VerticalAlignment="Center" Maximum="1400" Minimum="900" Value="1000" ValueChanged="update_resize_label" TickPlacement="BottomRight" LargeChange="100" TickFrequency="50" SmallChange="10"  />
 
-                <Button x:Name="resize_btn" Grid.Column="0" Grid.ColumnSpan="2" Content="Reize" Click="resize_click"/>
+                <Button x:Name="resize_btn" Grid.Column="0" Grid.ColumnSpan="2" Content="Reize" Click="resize_click" Visibility="Hidden"/>
             </Grid>
         </GroupBox>
 
@@ -85,7 +86,7 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                
+
                 <RadioButton x:Name="radio_del_yes" Content="Yes" HorizontalAlignment="Center" Grid.Column="0" Foreground="Red" IsChecked="True" />
                 <RadioButton x:Name="radio_del_no" Content="No" HorizontalAlignment="Center" Grid.Column="1" />
             </Grid>
@@ -133,31 +134,69 @@
 
         <!-- row 2 -->
         <StackPanel Grid.Row="1" Grid.ColumnSpan="5" >
-            <TextBox x:Name="tbox_Title" Text="" Height="25" Margin="1 0 2 2" TextAlignment="Center" VerticalContentAlignment="Center" IsReadOnly="True"/>
-            <TextBox x:Name="tbox_search" Text="" Height="25" Margin="1 0 2 2" TextAlignment="Center" VerticalContentAlignment="Center" TextChanged="tbox_search_change" />
+            <TextBox x:Name="tbox_Title" Text="" Height="25" Margin="1 0 2 2" TextAlignment="Center" VerticalContentAlignment="Center" IsReadOnly="True" Background="#FFFFF3D2" FontWeight="Bold" SelectionBrush="#FFD88100"/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="80"/>
+                </Grid.ColumnDefinitions>
+                <TextBox x:Name="tbox_search" Grid.Column="0" Text="" Height="25" Margin="1 0 2 2" TextAlignment="Center" VerticalContentAlignment="Center" TextChanged="tbox_search_change" />
+                <Button x:Name="btn_clear_search" Content="Clear" Grid.Column="1" Margin="0 0 2 2" Click="clear_btn_click" />
+            </Grid>
         </StackPanel>
 
         <!-- row 3 -->
-		<ListView Name="lv_mangadata" Grid.Row="2" Grid.ColumnSpan="5" Margin="1 0 1 0" SelectionChanged="lv_mangadata_selection" />
+        <ListView Name="lv_mangadata" Grid.Row="2" Grid.ColumnSpan="5" Margin="1 0 1 0" SelectionChanged="lv_mangadata_selection"/>
 
         <!-- row 4 -->
-        <StackPanel Grid.Row="3" Grid.ColumnSpan="5" Margin="1 0 1 0">
-            <RichTextBox x:Name="display_status" Height="100" Margin="0 0 0 5" IsReadOnly="True"/>
-            <ProgressBar x:Name="progress_convert" Height="25" Margin="0 0 0 5"/>
-            <Grid Height="80">
+        <Grid Grid.Row="3" Grid.ColumnSpan="5" Margin="1 0 1 0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <RichTextBox Grid.Row="0" x:Name="display_status" Height="100" Margin="0 0 0 5" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                <RichTextBox.Resources>
+                    <Style TargetType="Paragraph">
+                        <Setter Property="LineHeight" Value="5" />
+                    </Style>
+                </RichTextBox.Resources>
+            </RichTextBox>
+            <ProgressBar Grid.Row="1" x:Name="progress_convert" Height="25" Margin="0 0 0 5" SmallChange="1" Foreground="#FFFFBB77"/>
+            <Grid Height="80" Grid.Row="2">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="auto"/>
                 </Grid.ColumnDefinitions>
+                <Grid x:Name="sizeReportGrid" Grid.Column="0" VerticalAlignment="Center" Margin="15">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" Orientation="Horizontal">
+                        <Label Content="Size Before :"/>
+                        <Label x:Name="reportSizeBefore" Content="" FontWeight="Bold"/>
+                    </StackPanel>
+                    <StackPanel Grid.Column="1" Orientation="Horizontal">
+                        <Label Content="Size After :"/>
+                        <Label x:Name="reportSizeAfter" Content="" FontWeight="Bold"/>
+                    </StackPanel>
+                    <StackPanel Grid.Column="2" Orientation="Horizontal">
+                        <Label Content="Percent :"/>
+                        <Label x:Name="reportPercent" Content="" FontWeight="Bold" Foreground="#FF03AD1D" />
+                    </StackPanel>
+                </Grid>
 
                 <StackPanel Grid.Column="1" Orientation="Horizontal">
-                    <Button Content="Reset" Width="60" Margin="2 15 2 15"/>
+                    <Button x:Name="btn_reset" Content="Reset" Width="60" Margin="2 15 2 15" Click="btn_reset_Click"/>
+                    <Button x:Name="btn_config" Content="Config" Width="60" Margin="2 15 2 15" Click="btn_config_Click" />
                     <Button Content="Copy Log" Width="60" Margin="2 15 2 15"/>
                     <Button Content="Save Log" Width="60" Margin="2 15 2 15"/>
-                    <Button x:Name="convert_btn" Content="Convert" Width="60" Margin="2 15 20 15" Background="#FFF38416" Foreground="White" Click="convert_click"/>
+                    <Button x:Name="convert_btn" Content="Convert" Width="60" Margin="2 15 20 15" Click="convert_click" Style="{StaticResource CustomButtonStyle}"/>
                 </StackPanel>
             </Grid>
-        </StackPanel>
+        </Grid>
     </Grid>
 
 </Window>

@@ -25,6 +25,8 @@ namespace Converter
             InitializeComponent();
             // Load existing settings into the TextBoxes
             tx_manga_directory.Text = Properties.Settings.Default.manga_directory;
+            tx_manga_directory.Focus();
+            tx_manga_directory.SelectAll();
         }
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)

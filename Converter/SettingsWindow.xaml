@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Converter"
         mc:Ignorable="d"
-        Title="Settings" Height="150" Width="300">
+        Title="Settings" Height="150" Width="300" WindowStartupLocation="CenterScreen">
     <StackPanel Margin="10">
         <TextBlock Text="Manga Directory:" Margin="0 0 0 2"/>
         <TextBox x:Name="tx_manga_directory" Margin="0 0 0 10" />
